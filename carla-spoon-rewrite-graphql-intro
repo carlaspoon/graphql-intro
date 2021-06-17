@@ -1,2 +1,74 @@
-# GraphQL overview
+# GraphQL
+Learn about GraphQL, its key benefits, and how to get started. 
+-----
+GraphQL is a query language for *APIs*, not databases. To use it, you define a type system to describe your data, and then use the GraphQL server-side runtime to run queries on your existing data. Originally developed by Facebook for its mobile applications, GraphQL is now open-source technology that development teams use to efficiently build applications of all types. The neutral [GraphQL Foundation]( https://graphql.org/foundation/) maintains GraphQL, and manages its ongoing support and collaboration. Notable GraphQL users include GitHub, Twitter, Yelp, Shopify, and yes, Facebook.
+## Why use GraphQL?
+The following are some key ways that GraphQL can help you develop applications more efficiently:
+* You can query an API for only the exact data you need. 
+* it’s open source, so you can use it with any database or storage engine. 
+* You can use it for both server-side and front-end development. 
+* A single request can return multiple resources.
+* GraphQL applications, not the server, control the data that the apps receive.
+* You can use it with development tools like [Graph*i*QL]( https://github.com/graphql/graphiql).
+## How an GraphQL service works
+To help explain how GraphQL works, let’s use a basic example. 
+### Setting up the type system
+To get started, you define a type system that describes your data. The type system includes the following:
+* The *type* of data
+* One of more *fields* that describe the type
+* A *function* for each type’s fields.
+
+For example, suppose you want to create a service that returns information about the currently signed-in user (`me`), along with the name of that user. In this case, type system needs to include the following:
+````
+    type Query {
+       me: User
+    }
+ 
+    type User {
+       id: ID
+      name: String
+    }
+````
+Next, you define the *functions* for each type’s fields. Continuing with the example, the type system needs to include the following:
+````
+    function Query_me(request) {
+       return request.auth.user;
+    }
+ 
+    function User_name(user) {
+       return user.getName();
+    }
+````
+### Running a query
+Typically, you launch a GraphQL service by entering its URL in a web browser. When a GraphQL service is running, you can run queries on the data that’s defined in the type system. When you launch a query, the GraphQL services does the following:
+1. Checks whether the query only refers to types and fields defined in the type system.
+2. Runs the defined functions to produce a result.
+Continuing with the example, run the following query:
+````
+    {
+      me {
+            name
+      }
+    }
+````
+The query does the following:
+* Verifies that the `me` field for the `Query` type exists.
+* Verifies that the `name` field for the `User` type exists.
+* Assuming that a user with the name of `Luke Skywalker` is the currently signed-in user, returns the following:
+````
+    {
+      "me": {
+          "name": "Luke Skywalker"
+      }
+    }
+````
+## Where to go next
+To learn more about GraphQL syntax, choose [Continue Reading]( https://graphql.org/learn/queries/).
+To get started building GraphQL applications, see the following resources:
+* To learn how to use programming languages to build GraphQL applications, see [Code using GraphQL](https://graphql.org/code/).
+* For free online training, sign up for one of these courses:
+      * [Exploring GraphQL: A Query Language for APIs]( https://www.edx.org/course/exploring-graphql-a-query-language-for-apis) 
+      * [The Fullstack Tutorial for GraphQL]( https://www.howtographql.com/)
+
+
 
